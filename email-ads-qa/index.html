@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Email Ads QA · Live mock-up · Sam Bavafa</title>
+<meta name="description" content="Interactive mock-up of an email ads QA tool built at Loblaw Advance: preview ad tags and sample sends by publisher, send day, province, language and test recipient.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--brand:#4B2A85;--tint:rgba(75,42,133,.08);--ink:#1F1A2E;--muted:#5E5873;--line:#E4E1EC;--soft:#F7F6FA;--warn:#A33A00}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font:14px/1.45 Inter,system-ui,sans-serif}
+button,input{font:inherit}
+button{cursor:pointer}
+a{color:var(--brand)}
+.notice{background:#FFF8E6;border-bottom:1px solid #F0DFB0;padding:12px 32px;font-size:13px;color:#4A3B12;display:flex;gap:10px;align-items:flex-start}
+.notice strong{color:#2E2408}
+.notice a{color:#4A3B12;font-weight:600}
+header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;padding:16px 32px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:14px}
+.mark{width:32px;height:32px;border-radius:8px;background:var(--brand);display:flex;align-items:center;justify-content:center}
+.chip{padding:6px 12px;border-radius:999px;background:var(--tint);color:var(--brand);font-weight:600;font-size:13px}
+.layout{display:flex;flex-wrap:wrap;align-items:flex-start}
+aside{flex:1 1 280px;max-width:100%;padding:24px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:28px}
+aside section{display:flex;flex-direction:column;gap:10px}
+.lbl{margin:0;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.opt{border:1px solid #CFCADB;background:#fff;color:var(--ink)}
+.opt.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.pub{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:52px;padding:10px 14px;border-radius:10px;text-align:left}
+.pub small{display:block;font-size:12px;opacity:.85}
+.days{display:flex;flex-wrap:wrap;gap:8px}
+.day{min-width:64px;min-height:44px;padding:0 14px;border-radius:999px;font-weight:600;font-size:13px}
+.provs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.prov{min-height:44px;border-radius:8px;font-weight:600;font-size:13px}
+input[type=email]{min-height:44px;width:100%;padding:0 12px;border-radius:8px;border:1px solid #CFCADB;font-size:14px}
+.btn{min-height:44px;border-radius:8px;border:0;background:var(--brand);color:#fff;font-weight:600;font-size:14px;padding:0 18px}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid #CFCADB;font-weight:500}
+.result{display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:10px;border:1px solid rgba(75,42,133,.3);background:var(--tint)}
+.result.out{border-color:#F1C4AA;background:#FFF4EE}
+code,.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+main{flex:999 1 560px;min-width:0;padding:24px 32px 48px;display:flex;flex-direction:column;gap:24px}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tab{min-height:44px;padding:0 16px;border:0;border-bottom:3px solid transparent;margin-bottom:-1px;background:none;color:var(--muted);font-weight:600;font-size:14px}
+.tab.on{color:var(--brand);border-color:var(--brand)}
+.bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+h1{margin:0;font-size:22px;letter-spacing:-.01em}
+.sub{margin:0;color:var(--muted);font-size:13px}
+.lang-card{display:flex;flex-direction:column;gap:16px;padding:20px;border:1px solid var(--line);border-radius:14px}
+.slots{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start}
+.slot{display:flex;flex-direction:column;gap:10px;max-width:100%}
+.frame{overflow:hidden;border:1px dashed #CFCADB;background:var(--soft);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;text-align:center}
+.frame.r{border-color:transparent;background:#fff;display:block;text-align:left}
+.url{display:flex;gap:8px;align-items:flex-start;max-width:100%}
+.url code{flex:1;min-width:0;padding:8px 10px;border-radius:6px;background:var(--soft);font-size:11px;word-break:break-all}
+.copy{min-width:64px;min-height:36px;border-radius:6px;border:1px solid #CFCADB;background:#fff;font-size:12px;font-weight:600}
+.seg{display:flex;padding:3px;border-radius:999px;background:#F2F0F7}
+.seg button{min-width:56px;min-height:40px;border:0;border-radius:999px;background:none;color:var(--muted);font-weight:600;font-size:13px}
+.seg button.on{background:#fff;color:var(--brand)}
+.previews{display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start}
+.desk{max-width:100%;overflow-x:auto;border-radius:12px;border:1px solid var(--line);background:#F2F0F7;padding:24px}
+.desk>div{width:600px;background:#fff;box-shadow:0 1px 3px rgba(31,26,46,.08)}
+.phone{width:375px;max-width:100%;border-radius:36px;border:10px solid var(--ink);overflow:hidden;background:#fff}
+.phone>div{height:760px;overflow-y:auto}
+.scroll{max-width:100%;overflow-x:auto}
+/* email */
+.em{font:14px/1.45 Arial,Helvetica,sans-serif;color:#1A1A1A;background:#fff}
+.em img{display:block;max-width:100%;height:auto}
+.em .pill{display:inline-block;padding:12px 22px;border-radius:999px;font-weight:700;text-decoration:none}
+.em .col{display:flex;flex-direction:column}
+.em .split{display:flex;flex-wrap:wrap;gap:20px;align-items:center}
+.em .split>*{flex:1 1 220px}
+.adslot{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 0 32px;background:#fff}
+.adslot>span{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#5E5873}
+.noad{border:1px dashed #B9B3C6;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;color:var(--warn);font-size:13px}
+/* ad */
+.ad{position:relative;overflow:hidden;background:#0B47A8;color:#fff;font-family:Montserrat,Arial,sans-serif}
+.ad .glow{position:absolute;border-radius:50%;background:#1A5CC4}
+footer.site{padding:24px 32px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+@media (max-width:640px){header,.notice,main,footer.site{padding-left:16px;padding-right:16px}aside{border-right:0;border-bottom:1px solid var(--line);padding:16px}}
+</style>
+</head>
+<body>
+
+<div class="notice" role="note">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7A5B00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:0 0 auto;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></svg>
+  <span><strong>Interactive mock-up for my portfolio.</strong> This page recreates an internal QA tool I built at Loblaw Advance so AdOps could check email ads without sending test emails. Nothing here is connected to a live ad server or customer data: ad tags, zone IDs and audience results are simulated. The sample sends are based on real PC Optimum, Shoppers Drug Mart and PC Express emails with the recipient details changed, and the Oreo ad and offer are illustrative only, not a real campaign. All brand names and logos belong to their owners. <a href="https://bavafa.github.io/">Back to my portfolio</a></span>
+</div>
+
+<header>
+  <div class="brand">
+    <div class="mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div>
+    <div><span style="font-weight:700;font-size:17px">Loblaw Advance</span> <span style="color:var(--muted);font-size:15px;margin-left:6px">Email Ads QA</span></div>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px"><span style="font-size:12px;color:var(--muted)">Testing</span><span class="chip" id="summary"></span></div>
+</header>
+
+<div class="layout">
+  <aside>
+    <section><h2 class="lbl">Publisher (email send)</h2><div id="pubs" class="col" style="display:flex;flex-direction:column;gap:10px"></div></section>
+    <section><h2 class="lbl">Send day</h2><div id="days" class="days"></div></section>
+    <section><h2 class="lbl">Location (province)</h2><div id="provs" class="provs"></div><p class="sub">Selected: <strong id="provName" style="color:var(--ink)"></strong></p></section>
+    <section>
+      <h2 class="lbl">Test recipient</h2>
+      <label for="email" style="font-size:13px">Email address</label>
+      <input id="email" type="email" placeholder="name@example.com" value="alex@gmail.com" autocomplete="off">
+      <div style="display:flex;gap:8px"><button class="btn" id="check" style="flex:1">Check audience</button><button class="btn ghost" id="clear">Clear</button></div>
+      <p id="err" style="margin:0;font-size:13px;color:var(--warn)" hidden></p>
+      <div id="result"></div>
+    </section>
+  </aside>
+
+  <main>
+    <div class="tabs" role="tablist" aria-label="View">
+      <button class="tab" role="tab" data-tab="tags">Ad tags</button>
+      <button class="tab" role="tab" data-tab="sample">Send samples</button>
+    </div>
+    <div id="view"></div>
+  </main>
+</div>
+
+<footer class="site">Built by <a href="https://bavafa.github.io/">Sam Bavafa</a>. Mock-up for demonstration only.</footer>
+
+<script>
+(function(){
+var A='assets/';
+var PUBS=[{id:'pco',code:'PCO',name:'PC Optimum',days:['Mon','Wed','Sat']},{id:'sdm',code:'SDM',name:'Shoppers Drug Mart',days:['Wed','Fri']},{id:'pcx',code:'PCX',name:'PC Express',days:['Mon']}];
+var PROVS=[['ALL','All provinces'],['AB','Alberta'],['BC','British Columbia'],['MB','Manitoba'],['NB','New Brunswick'],['NL','Newfoundland and Labrador'],['NS','Nova Scotia'],['NT','Northwest Territories'],['NU','Nunavut'],['ON','Ontario'],['PE','Prince Edward Island'],['QC','Quebec'],['SK','Saskatchewan'],['YT','Yukon']];
+var KNOWN={'alex@gmail.com':true};
+var S={pub:'pco',day:'Mon',prov:'ON',tab:'sample',lang:'EN',check:null,rendered:false,at:'',copied:''};
+
+function esc(v){return String(v).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function $(id){return document.getElementById(id);}
+function pub(){return PUBS.filter(function(p){return p.id===S.pub;})[0];}
+function provLabel(){return S.prov==='ALL'?'All provinces':S.prov;}
+function summary(){var p=pub();return p.code+' · '+S.day+' · '+provLabel();}
+function blocked(){return !!(S.check&&!S.check.inAud);}
+
+async function sha256(t){if(!(window.crypto&&crypto.subtle))return null;var b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,'0');}).join('');}
+async function doCheck(){
+  var e=$('email').value.trim().toLowerCase();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)){$('err').textContent='Enter a valid email address.';$('err').hidden=false;S.check=null;render();return;}
+  $('err').hidden=true;
+  var h=null;try{h=await sha256(e);}catch(x){}
+  var known=Object.prototype.hasOwnProperty.call(KNOWN,e);
+  S.check={email:e,hash:h||'Hashing unavailable in this browser',known:known,inAud:known?KNOWN[e]:(h?parseInt(h[0],16)%2===0:false)};
+  render();
+}
+function select(p){Object.assign(S,{rendered:false,at:'',copied:''},p);render();}
+
+/* ---------- Oreo ad ---------- */
+var AD={EN:{label:'Sponsored',h:'Earn 2,000 PC Optimum points',sub:'when you buy any 2 packs of Oreo cookies',cta:'Load offer',fine:'Offer valid Nov 9 to 15, 2026. Load in the app before you shop.'},
+FR:{label:'Commandité',h:'Obtenez 2 000 points PC Optimum',sub:'à l’achat de 2 emballages de biscuits Oreo',cta:'Charger l’offre',fine:'Offre valide du 9 au 15 nov. 2026. Chargez-la dans l’appli avant vos achats.'}};
+function cookieSvg(w,h,big){
+  var s=big?1.3:1;
+  return '<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+(big?150:122)+' '+(big?120:90)+'" role="img" aria-label="Chocolate sandwich cookies with a milk splash" style="position:relative;flex:0 0 auto">'+
+  (big?'<path d="M8 90 C12 70 28 76 32 60 C38 76 52 66 58 52 C64 70 84 64 90 52 C96 70 120 66 130 78 C146 86 140 108 120 110 L26 110 C6 110 2 100 8 90 Z" fill="#fff"/><circle cx="22" cy="54" r="4" fill="#fff"/><circle cx="138" cy="64" r="3" fill="#fff"/><rect x="26" y="80" width="96" height="13" rx="6.5" fill="#24150F"/><rect x="30" y="92" width="88" height="8" fill="#F8F2E4"/><rect x="26" y="99" width="96" height="13" rx="6.5" fill="#24150F"/><g transform="rotate(-14 92 46)"><circle cx="92" cy="46" r="34" fill="#2A1912" stroke="#2A1912" stroke-width="6" stroke-dasharray="3.6 2.8" stroke-linecap="round"/><circle cx="92" cy="46" r="26" fill="none" stroke="#412A1F" stroke-width="2.4"/><circle cx="92" cy="46" r="17" fill="none" stroke="#412A1F" stroke-width="2" stroke-dasharray="2.4 3"/><circle cx="92" cy="46" r="7" fill="none" stroke="#412A1F" stroke-width="2"/><path d="M68 30 A29 29 0 0 1 86 18" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="3" stroke-linecap="round"/></g>'
+  :'<path d="M6 66 C10 50 22 56 26 44 C30 56 40 48 46 38 C50 52 66 48 70 40 C76 54 96 50 104 58 C116 64 112 80 96 82 L22 82 C6 82 2 74 6 66 Z" fill="#fff"/><circle cx="18" cy="40" r="3" fill="#fff"/><circle cx="110" cy="48" r="2.5" fill="#fff"/><rect x="20" y="60" width="74" height="10" rx="5" fill="#24150F"/><rect x="23" y="69" width="68" height="6" fill="#F8F2E4"/><rect x="20" y="74" width="74" height="10" rx="5" fill="#24150F"/><g transform="rotate(-14 74 34)"><circle cx="74" cy="34" r="26" fill="#2A1912" stroke="#2A1912" stroke-width="5" stroke-dasharray="3 2.4" stroke-linecap="round"/><circle cx="74" cy="34" r="20" fill="none" stroke="#412A1F" stroke-width="2"/><circle cx="74" cy="34" r="13" fill="none" stroke="#412A1F" stroke-width="1.6" stroke-dasharray="2 2.6"/><circle cx="74" cy="34" r="5" fill="none" stroke="#412A1F" stroke-width="1.6"/><path d="M56 22 A22 22 0 0 1 70 13" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="2.5" stroke-linecap="round"/></g>')+'</svg>';
+}
+function ad(size,lang){
+  var c=AD[lang];
+  if(size==='lb') return '<div class="ad" style="width:520px;height:90px;display:flex;align-items:center;gap:12px;padding:0 16px 0 6px"><div class="glow" style="left:-30px;top:-40px;width:170px;height:170px"></div>'+cookieSvg(122,90,false)+
+    '<div style="position:relative;flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:900;letter-spacing:.14em">OREO</span><span style="font-size:16px;font-weight:800;line-height:1.15">'+c.h+'</span><span style="font-size:11px;font-weight:600;color:#DCE6F8">'+c.sub+'</span></div>'+
+    '<div style="position:relative;display:flex;flex-direction:column;align-items:flex-end;gap:6px"><span style="font-size:8px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#DCE6F8">'+c.label+'</span><span style="padding:9px 14px;border-radius:999px;background:#fff;color:#0B47A8;font-weight:800;font-size:12px;white-space:nowrap">'+c.cta+'</span></div></div>';
+  return '<div class="ad" style="width:300px;height:250px;padding:16px 18px 14px;display:flex;flex-direction:column"><div class="glow" style="right:-60px;bottom:-70px;width:240px;height:240px"></div>'+
+    '<div style="position:relative;display:flex;align-items:center;justify-content:space-between"><span style="font-size:26px;font-weight:900;letter-spacing:.14em">OREO</span><span style="font-size:8px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#DCE6F8">'+c.label+'</span></div>'+
+    '<span style="position:relative;margin-top:8px;font-size:21px;font-weight:800;line-height:1.12;max-width:200px">'+c.h+'</span><span style="position:relative;margin-top:6px;font-size:12px;font-weight:600;color:#DCE6F8;max-width:160px">'+c.sub+'</span>'+
+    '<div style="position:relative;margin-top:auto;display:flex;flex-direction:column;gap:8px;align-items:flex-start"><span style="padding:9px 16px;border-radius:999px;background:#fff;color:#0B47A8;font-weight:800;font-size:13px">'+c.cta+'</span><span style="font-size:8px;font-weight:600;color:#DCE6F8;max-width:120px;line-height:1.3">'+c.fine+'</span></div>'+
+    '<div style="position:absolute;right:0;bottom:6px">'+cookieSvg(150,120,true)+'</div></div>';
+}
+
+/* ---------- email copy ---------- */
+var COM={EN:{adLabel:'Advertisement',noAd:'No ad served: recipient not in audience'},FR:{adLabel:'Publicité',noAd:'Aucune pub : destinataire hors audience'}};
+var C={
+pco:{EN:{bt:'Update Your PC Optimum App',bb:'A new App experience is almost here! Update now and get ready to explore smarter ways to shop and save time!',up:'Update Now',bl:'Your current points balance is',bv:'24,500**',rl:'You can redeem',rv:'$20**',hl:'Activate and shop your weekly offers!',body:'Open the app to activate your offers, plus, scan at checkout to earn + save. Offers expire soon.',open:'Open the app',wait:'{name}, your offers are still waiting!',waitSub:'Open your app to get your new weekly offers, expiring soon!',
+  offers:[['100 points','for every $1 spent on Bananas',''],['20x the points','When you spend $125 or more in-store and online','pco-chip-sdm.png'],['2,000 points','when ordering $20+ with DoorDash!','pco-chip-doordash.png']],get:'Get my offers',
+  cards:[['Your holiday deals','Get over $4 in points when you shop this week’s seasonal favourites from the PC® Insiders Report™. Offers end Wednesday.','Explore offers','pco-holiday.jpg'],['What the wellie?!','Try our soft and flaky PC® Beef Wellie Bites, made for anyone who’s ever wanted to savour a beef wellington in one, perfect bite.','Discover more','pco-wellie.jpg']],
+  dl:'Download the app',about:'About',rec:'You are receiving this email because {email} is a PC Optimum™ member.'},
+ FR:{bt:'Mettez à jour votre appli PC Optimum',bb:'Une nouvelle expérience appli arrive bientôt! Faites la mise à jour et découvrez des façons plus futées de magasiner et de gagner du temps!',up:'Mettre à jour',bl:'Votre solde de points actuel est de',bv:'24 500**',rl:'Vous pouvez échanger',rv:'20 $**',hl:'Activez et profitez de vos offres de la semaine!',body:'Ouvrez l’appli pour activer vos offres, puis balayez-la à la caisse pour accumuler et économiser. Les offres expirent bientôt.',open:'Ouvrir l’appli',wait:'{name}, vos offres vous attendent toujours!',waitSub:'Ouvrez votre appli pour obtenir vos nouvelles offres de la semaine, qui expirent bientôt!',
+  offers:[['100 points','par tranche de 1 $ dépensée en bananes',''],['20x les points','à l’achat de 125 $ ou plus en magasin et en ligne','pco-chip-sdm.png'],['2 000 points','à l’achat de 20 $ ou plus avec DoorDash!','pco-chip-doordash.png']],get:'Obtenir mes offres',
+  cards:[['Vos aubaines des Fêtes','Obtenez plus de 4 $ en points à l’achat des favoris saisonniers de la semaine du Rapport des initiés PC. Les offres se terminent mercredi.','Découvrir les offres','pco-holiday.jpg'],['Wellington en bouchées!','Essayez nos bouchées de bœuf Wellington PC, tendres et feuilletées, pour savourer un bœuf Wellington en une seule bouchée parfaite.','En savoir plus','pco-wellie.jpg']],
+  dl:'Téléchargez l’appli',about:'À propos',rec:'Vous recevez ce courriel parce que {email} est membre PC Optimum.'}},
+sdm:{EN:{tag:'Proudly Canadian owned and operated',nav:['Flyer Deals','Find a Location','Load your Offers'],flyer:'Check this Week’s Flyer Deals',pl:'{name}, you have 24,500 points',pv:'That’s a $20 value!',ex:'SHOPPERS DRUG MART EXCLUSIVE',bogo:'Buy 1 get 1 free when you buy participating products',date:'Tuesday, Nov 3',bt:'Buy one get one free',bb:'Almost any Dove, Tresemme or Axe products',go:'Get Offer',ch:'In-store & Online',bd:'Monday, Nov 2 to Thursday, Nov 5',btt:'Get 20x the points',bbd:'when you spend $75 or more on beauty.',badge:'That’s 30% back in points!',shop:'Shop now',find:'Find a store',gt:'Get ready to get holiday gifting',gb:'Discover great gifts for everyone and every budget.',h1:'Is it pollen or my pet?',h1b:'Chat with PC Health™',h1c:'Start now',h2:'Health questions? Ask PC Health™',h2b:'Getting you from trusted information to trusted care.',h2c:'Try it now',fb:'{name}, did you like this email?',dl:'Download the Shoppers Drug Mart™ app',links:['Unsubscribe','SMS Opt-in','Contact us','Privacy Policy'],rec:'You are receiving this email because {email} is a PC Optimum member.'},
+ FR:{tag:'Fièrement canadienne',nav:['Aubaines de la circulaire','Trouver une succursale','Charger vos offres'],flyer:'Voyez les aubaines de la circulaire de la semaine',pl:'{name}, vous avez 24 500 points',pv:'Une valeur de 20 $!',ex:'EXCLUSIVITÉ SHOPPERS DRUG MART',bogo:'Achetez-en 1, obtenez-en 1 gratuit',date:'Mardi 3 nov.',bt:'Achetez-en un, obtenez-en un gratuit',bb:'Presque tous les produits Dove, Tresemme ou Axe',go:'Obtenir l’offre',ch:'En magasin et en ligne',bd:'Du lundi 2 nov. au jeudi 5 nov.',btt:'Obtenez 20x les points',bbd:'à l’achat de 75 $ ou plus en beauté.',badge:'30 % de retour en points!',shop:'Magasiner',find:'Trouver une succursale',gt:'Préparez vos cadeaux des Fêtes',gb:'Découvrez de superbes cadeaux pour tous et pour tous les budgets.',h1:'Pollen ou animal de compagnie?',h1b:'Clavardez avec PC Santé',h1c:'Commencer',h2:'Des questions sur la santé? Demandez à PC Santé',h2b:'De l’information fiable à des soins de confiance.',h2c:'Essayer',fb:'{name}, avez-vous aimé ce courriel?',dl:'Téléchargez l’appli Shoppers Drug Mart',links:['Se désabonner','Inscription SMS','Nous joindre','Confidentialité'],rec:'Vous recevez ce courriel parce que {email} est membre PC Optimum.'}},
+pcx:{EN:{greet:'Way to go, {name}!',bal:'Current PC Optimum™ balance: 24,500 points',low:'$20',red:'Redeemable for <b>$20</b>',high:'$30',hero:'Groceries. Fast. Easy.',p1:'Between bath time and bed time, make groceries the easiest part of your routine with <i>PC Express</i>.',p2:'Shop groceries online for fast delivery to your door or pick up at your favourite store.',get:'Get',offer:'30,000 PC Optimum™ points plus 1 month of FREE pickup and delivery',os:'on your next <i>PC Express</i> order of $90 or more.',code:'Use your exclusive code <b>[PROMO CODE]</b> at checkout when you sign in with your <span style="color:#1F5FD0">{email}</span> account.',shop:'Shop now',fine:'Offer valid on orders placed and picked up or delivered by November 8, 2026. Cannot be combined with any other coupons or promotions.',app:'Online grocery shopping is easier with the PC Express app. Download it now for <b>iOS</b> or <b>Android</b>.',pn:'*Points balance and redemption value are calculated up to 48 hours prior to sending this email.',links:['Unsubscribe','Manage Preferences','Contact Us'],rec:'Sent to {email}'},
+ FR:{greet:'Bravo, {name}!',bal:'Solde PC Optimum actuel : 24 500 points',low:'20 $',red:'Échangeable contre <b>20 $</b>',high:'30 $',hero:'L’épicerie. Rapide. Facile.',p1:'Entre le bain et le dodo, faites de l’épicerie la partie la plus simple de votre routine avec <i>PC Express</i>.',p2:'Faites votre épicerie en ligne pour une livraison rapide à votre porte ou un ramassage à votre magasin préféré.',get:'Obtenez',offer:'30 000 points PC Optimum et 1 mois de ramassage et de livraison GRATUITS',os:'sur votre prochaine commande <i>PC Express</i> de 90 $ ou plus.',code:'Utilisez votre code exclusif <b>[CODE PROMO]</b> à la caisse en vous connectant avec votre compte <span style="color:#1F5FD0">{email}</span>.',shop:'Magasiner',fine:'Offre valide sur les commandes passées et ramassées ou livrées au plus tard le 8 novembre 2026. Ne peut être combinée à aucun autre coupon ou promotion.',app:'L’épicerie en ligne est plus simple avec l’appli PC Express. Téléchargez-la pour <b>iOS</b> ou <b>Android</b>.',pn:'*Le solde de points et la valeur d’échange sont calculés jusqu’à 48 heures avant l’envoi de ce courriel.',links:['Se désabonner','Gérer les préférences','Nous joindre'],rec:'Envoyé à {email}'}}
+};
+var LEGAL={EN:'[Legal footer: sender address, trademarks and offer terms]',FR:'[Pied de page légal : adresse, marques de commerce et conditions des offres]'};
+
+function fill(t,name,email){
+  var o={};for(var k in t){var v=t[k];
+    if(typeof v==='string')v=v.split('{name}').join(esc(name)).split('{email}').join(esc(email));
+    o[k]=v;}return o;
+}
+function img(f,alt,w,extra){return '<img src="'+A+f+'" alt="'+esc(alt||'')+'" style="width:'+w+';'+(extra||'')+'">';}
+function slot(desk,lang){
+  var w=desk?520:300,h=desk?90:250;
+  return '<div class="adslot"><span>'+COM[lang].adLabel+'</span>'+(blocked()?'<div class="noad" style="width:'+w+'px;height:'+h+'px">'+COM[lang].noAd+'</div>':ad(desk?'lb':'bb',lang))+'</div>';
+}
+
+function email(pid,lang,desk,name,em){
+  var t=fill(C[pid][lang],name,em),pad=desk?'32px':'16px',hb=desk?40:28,hm=desk?26:21,L=LEGAL[lang];
+  if(pid==='pco'){
+    return '<div class="em">'+
+    '<div style="background:#DA291C;color:#fff;text-align:center;padding:20px '+pad+'" class="col"><strong style="font-size:20px">'+t.bt+'</strong><span style="margin-top:8px">'+t.bb+'</span><span style="margin-top:10px;font-weight:700"><a href="#" style="color:#fff">'+t.up+'</a> | <a href="#" style="color:#fff">FAQ</a></span></div>'+
+    '<div style="background:#F9D9D7;padding:24px '+pad+' 32px;display:flex;flex-direction:column;gap:20px"><div style="display:flex;justify-content:flex-end">'+img('pco-logo.png','PC Optimum','206px','max-width:60%')+'</div>'+
+    '<div style="display:flex;flex-wrap:wrap;gap:12px 40px"><div class="col"><span style="font-size:13px">'+t.bl+'</span><strong style="font-size:24px">'+t.bv+'</strong></div><div class="col"><span style="font-size:13px">'+t.rl+'</span><strong style="font-size:24px">'+t.rv+'</strong></div></div>'+
+    '<h2 style="margin:0;color:#DA291C;font-size:'+hb+'px;line-height:1.1">'+t.hl+'</h2><p style="margin:0;font-size:15px">'+t.body+'</p><div><a href="#" class="pill" style="background:#DA291C;color:#fff">'+t.open+'</a></div>'+img('pco-hero.jpg','','349px','margin:8px auto 0')+'</div>'+
+    '<div style="padding:32px '+pad+';display:flex;flex-direction:column;gap:24px"><div class="col" style="gap:8px"><strong style="color:#DA291C;font-size:'+hm+'px;line-height:1.2">'+t.wait+'</strong><span style="font-size:15px">'+t.waitSub+'</span></div>'+
+    t.offers.map(function(o){return '<div class="col" style="gap:6px"><strong style="font-size:20px">'+o[0]+'</strong><span>'+o[1]+'</span>'+(o[2]?img(o[2],o[2].indexOf('sdm')>0?'Shoppers Drug Mart':'DoorDash','172px','margin-top:6px'):'')+'</div>';}).join('')+
+    '<div><a href="#" class="pill" style="background:#DA291C;color:#fff">'+t.get+'</a></div></div>'+slot(desk,lang)+
+    '<div style="background:#F9D9D7;padding:24px '+pad+';display:flex;flex-direction:column;gap:20px">'+t.cards.map(function(c){return '<div style="background:#D6197F;color:#fff;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:14px"><strong style="font-size:24px;line-height:1.2">'+c[0]+'</strong><span style="font-size:15px">'+c[1]+'</span><div><a href="#" class="pill" style="background:#fff;color:#1A1A1A;padding:10px 18px;font-size:13px">'+c[2]+'</a></div>'+img(c[3],'','100%','border-radius:12px')+'</div>';}).join('')+'</div>'+
+    '<div style="background:#F2F2F2;padding:28px '+pad+';display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center"><div style="align-self:stretch;display:flex;align-items:center;justify-content:space-between;gap:12px">'+img('pco-footer-logo.png','PC Optimum','180px','max-width:50%')+img('pco-social.png','Instagram, TikTok, Facebook','139px','max-width:40%')+'</div>'+
+    '<strong style="font-size:20px;margin-top:12px">'+t.dl+'</strong><div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px"><a href="#" class="pill" style="border:1.5px solid #1A1A1A;color:#1A1A1A;padding:9px 16px;font-size:13px">App Store</a><a href="#" class="pill" style="border:1.5px solid #1A1A1A;color:#1A1A1A;padding:9px 16px;font-size:13px">Google Play</a></div>'+
+    '<span style="font-weight:700"><a href="#" style="color:#1A1A1A">'+t.about+'</a> | <a href="#" style="color:#1A1A1A">FAQ</a></span><span style="font-size:12px">'+t.rec+'</span><span style="font-size:11px;color:#555">'+L+'</span></div></div>';
+  }
+  if(pid==='sdm'){
+    var split=function(bg,fg,imgHtml,inner){return '<div style="background:'+bg+';color:'+fg+';padding:28px '+pad+'" class="split">'+imgHtml+'<div class="col" style="gap:10px">'+inner+'</div></div>';};
+    return '<div class="em">'+
+    '<div style="background:#CC2229;color:#fff;text-align:center;padding:20px '+pad+';display:flex;flex-direction:column;align-items:center;gap:8px">'+img('sdm-logo.png','Shoppers Drug Mart','256px','max-width:80%')+'<span style="font-size:12px">'+t.tag+'</span><div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;font-size:13px;font-weight:700">'+t.nav.map(function(n){return '<a href="#" style="color:#fff">'+n+'</a>';}).join('')+'</div></div>'+
+    '<div style="background:#F5F5F5;padding:14px '+pad+';display:flex;align-items:center;justify-content:center;gap:12px">'+img('sdm-flyer.png','','43px')+'<span style="font-size:15px">'+t.flyer+'</span></div>'+
+    '<div style="background:#F6D5D3;padding:14px '+pad+';text-align:center" class="col"><span style="font-size:15px">'+t.pl+'</span><strong style="font-size:15px">'+t.pv+'</strong></div>'+
+    '<div style="background:#FDF0EF;padding:20px '+pad+' 28px;display:flex;flex-direction:column;gap:14px"><strong style="text-align:center;font-size:20px">'+t.ex+'</strong>'+img('sdm-bogo.png',t.bogo,'100%')+
+    '<div style="display:flex;align-items:center;gap:10px">'+img('sdm-optimum-icon.png','PC Optimum','28px')+'<strong style="font-size:13px">'+t.date+'</strong></div><strong style="font-size:22px">'+t.bt+'</strong><span style="font-size:15px">'+t.bb+'</span><div><a href="#" class="pill" style="background:#2B2B2B;color:#fff">'+t.go+'</a></div></div>'+
+    slot(desk,lang)+
+    '<div style="background:#C8313A;color:#fff;padding:28px 0 0 '+pad+'" class="split"><div class="col" style="gap:10px;padding-bottom:28px"><span style="align-self:flex-start;padding:4px 8px;border-radius:4px;background:#fff;color:#1A1A1A;font-size:11px">'+t.ch+'</span><strong style="font-size:13px">'+t.bd+'</strong><strong style="font-size:24px">'+t.btt+'</strong><span style="font-size:15px">'+t.bbd+'</span><div style="display:flex;align-items:center;gap:20px;margin-top:4px"><a href="#" class="pill" style="background:#fff;color:#1A1A1A;padding:11px 20px">'+t.shop+'</a><a href="#" style="color:#fff;font-weight:700">'+t.find+'</a></div></div>'+img('sdm-beauty.jpg',t.badge,'100%','max-width:298px;margin-left:auto;align-self:flex-end')+'</div>'+
+    '<div style="height:16px"></div>'+
+    split('#C8102E','#fff',img('sdm-gift.jpg','','100%','max-width:256px'),'<strong style="font-size:24px;line-height:1.2">'+t.gt+'</strong><span style="font-size:15px">'+t.gb+'</span><div><a href="#" class="pill" style="background:#fff;color:#0E5C3E;padding:11px 20px">'+t.shop+'</a></div>')+
+    '<div style="height:30px"></div>'+
+    split('#E3F3F8','#1A1A1A',img('sdm-health-pet.jpg','','100%','max-width:256px'),'<strong style="font-size:22px">'+t.h1+'</strong><span style="font-size:15px">'+t.h1b+'</span><div><a href="#" class="pill" style="background:#0B76AB;color:#fff;padding:11px 20px">'+t.h1c+'</a></div>')+
+    '<div style="height:30px"></div>'+
+    split('#E3F3F8','#1A1A1A',img('sdm-health-app.jpg','','100%','max-width:256px'),'<strong style="font-size:22px;line-height:1.25">'+t.h2+'</strong><span style="font-size:15px">'+t.h2b+'</span><div><a href="#" class="pill" style="background:#0B76AB;color:#fff;padding:11px 20px">'+t.h2c+'</a></div>')+
+    '<div style="height:30px"></div>'+
+    '<div style="background:#CFE8F1;padding:24px '+pad+';display:flex;flex-direction:column;align-items:center;gap:14px"><strong style="font-size:20px;color:#2F4555;text-align:center">'+t.fb+'</strong><div style="display:flex;gap:16px"><a href="#">'+img('sdm-thumb-up.png','Yes','56px')+'</a><a href="#">'+img('sdm-thumb-down.png','No','56px')+'</a></div></div>'+
+    '<div style="background:#F2F2F2;padding:28px '+pad+';display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center"><div style="align-self:stretch;display:flex;align-items:center;justify-content:space-between;gap:12px">'+img('sdm-footer-logo.png','Shoppers Drug Mart','226px','max-width:55%')+img('sdm-social.png','Facebook, TikTok, Instagram','135px','max-width:38%')+'</div>'+
+    '<strong style="font-size:20px;margin-top:12px">'+t.dl+'</strong><div style="display:flex;flex-wrap:wrap;justify-content:center;gap:14px"><a href="#">'+img('sdm-appstore.png','Download on the App Store','108px')+'</a><a href="#">'+img('sdm-googleplay.png','Get it on Google Play','122px')+'</a></div>'+
+    '<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;font-size:12px">'+t.links.map(function(l){return '<a href="#" style="color:#1A1A1A">'+l+'</a>';}).join('')+'</div><span style="font-size:12px">'+t.rec+'</span><span style="font-size:11px;color:#555">'+L+'</span></div></div>';
+  }
+  return '<div class="em">'+
+    '<div style="padding:16px"><div style="background:#F9D9D7;border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:12px"><div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px"><div class="col" style="align-items:flex-start;gap:6px">'+img('pcx-optimum-pill.png','PC Optimum','94px')+'<span style="font-size:16px">'+t.greet+'</span></div><strong style="font-size:14px">'+t.bal+'</strong></div>'+
+    '<div style="height:14px;border-radius:999px;background:#ECECEC;overflow:hidden"><div style="width:45%;height:100%;border-radius:999px;background:#DA291C"></div></div><div style="display:flex;justify-content:space-between;gap:8px;font-size:13px"><strong>'+t.low+'</strong><span>'+t.red+'</span><strong>'+t.high+'</strong></div></div></div>'+
+    '<div style="padding:12px '+pad+' 20px;display:flex;justify-content:center">'+img('pcx-proud.png','Proudly Canadian, PC Express','530px')+'</div>'+
+    img('pcx-hero.jpg',t.hero,'100%')+
+    '<div style="padding:32px '+pad+';display:flex;flex-direction:column;gap:16px;text-align:center;font-size:16px"><span>'+t.p1+'</span><span>'+t.p2+'</span><span>'+t.get+'</span><strong style="color:#DA291C;font-size:'+hm+'px;line-height:1.2">'+t.offer+'</strong><span>'+t.os+'</span><span>'+t.code+'</span><a href="#" style="display:block;padding:16px;background:#E8382C;color:#fff;font-weight:700;font-size:18px;text-decoration:none">'+t.shop+'</a><span style="font-size:11px">'+t.fine+'</span></div>'+
+    slot(desk,lang)+
+    '<div style="background:#231F20;color:#fff;padding:32px '+pad+';display:flex;flex-direction:column;gap:14px;text-align:center;font-size:12px"><span>'+t.app+'</span><span>'+t.pn+'</span><span style="color:#CFCFCF">'+L+'</span><span>'+t.rec+'</span><div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px">'+t.links.map(function(l){return '<a href="#" style="color:#fff">'+l+'</a>';}).join('')+'</div></div></div>';
+}
+
+/* ---------- render ---------- */
+function on(b){return 'opt'+(b?' on':'');}
+function render(){
+  var p=pub(),ch=S.check,bl=blocked();
+  $('summary').textContent=summary();
+  $('pubs').innerHTML=PUBS.map(function(x){return '<button class="pub '+on(x.id===S.pub)+'" data-pub="'+x.id+'"><span><strong>'+x.code+'</strong><small>'+x.name+'</small></span><small>'+x.days.join(' · ')+'</small></button>';}).join('');
+  $('days').innerHTML=p.days.map(function(d){return '<button class="day '+on(d===S.day)+'" data-day="'+d+'">'+d+'</button>';}).join('');
+  $('provs').innerHTML=PROVS.map(function(v){return '<button class="prov '+on(v[0]===S.prov)+'" data-prov="'+v[0]+'" title="'+v[1]+'" aria-label="'+v[1]+'">'+(v[0]==='ALL'?'All':v[0])+'</button>';}).join('');
+  var pn=PROVS.filter(function(v){return v[0]===S.prov;})[0][1];
+  $('provName').textContent=S.prov==='ALL'?pn:pn+' ('+S.prov+')';
+  $('result').innerHTML=ch?'<div class="result'+(bl?' out':'')+'"><strong style="color:'+(bl?'var(--warn)':'var(--brand)')+'">'+(ch.inAud?'Will see the ad':'Will not see the ad')+'</strong><span style="font-size:13px">'+esc(ch.email)+(ch.inAud?' is in the audience for ':' is not in the audience for ')+esc(summary())+'.</span><span class="lbl" style="font-size:11px">SHA-256 UID</span><code style="font-size:11px;word-break:break-all">'+esc(ch.hash)+'</code><span style="font-size:12px;color:var(--muted)">'+(ch.known?'Set as an in-audience test account.':'Simulated result for this demo.')+'</span></div>':'';
+  document.querySelectorAll('.tab').forEach(function(b){var o=b.dataset.tab===S.tab;b.classList.toggle('on',o);b.setAttribute('aria-selected',o);});
+  var uid=ch&&/^[0-9a-f]{64}$/.test(ch.hash)?ch.hash:'[SHA256_EMAIL]';
+  var em=ch?ch.email:'alex@gmail.com',loc=(em.split('@')[0].split(/[._+-]/)[0]||'Alex'),name=loc.charAt(0).toUpperCase()+loc.slice(1);
+  var v='';
+  if(S.tab==='tags'){
+    v='<div style="display:flex;flex-direction:column;gap:24px"><div class="bar"><div><h1>Ad tags</h1><p class="sub">'+(S.rendered?'Rendered '+esc(summary())+' at '+S.at+(ch?' for '+esc(ch.email):' (no test recipient)'):'Pick a send and province, then render. Changing the selection clears the last render.')+'</p></div><button class="btn" id="renderBtn">Render tags</button></div>';
+    [['EN','English'],['FR','Français']].forEach(function(lg){
+      v+='<section class="lang-card"><div style="display:flex;align-items:center;gap:10px"><span style="padding:4px 10px;border-radius:6px;background:var(--brand);color:#fff;font-weight:700;font-size:12px">'+lg[0]+'</span><h2 style="margin:0;font-size:16px">'+lg[1]+'</h2></div><div class="slots">';
+      [['lb','Desktop',520,90],['bb','Big box',300,250]].forEach(function(z){
+        var key=lg[0]+'-'+z[0];
+        var url='https://servedbyadbutler.com/adserve/;ID=[ACCOUNT_ID];size='+z[2]+'x'+z[3]+';setID=['+p.code+'_'+S.day.toUpperCase()+'_'+lg[0]+'_'+z[0].toUpperCase()+'_ZONE];type=img;pub='+p.id+';send='+S.day.toLowerCase()+';lang='+lg[0].toLowerCase()+';prov='+(S.prov==='ALL'?'all':S.prov)+';uid='+uid;
+        var inner=!S.rendered?'Not rendered':(bl?'<div style="color:var(--warn)"><strong>No ad served</strong><br><span style="color:var(--muted);font-size:12px">Recipient not in audience</span></div>':ad(z[0],lg[0]));
+        v+='<div class="slot"><div style="display:flex;justify-content:space-between;gap:12px"><strong style="font-size:13px">'+z[1]+'</strong><span class="sub" style="font-size:12px">'+z[2]+' × '+z[3]+'</span></div><div class="scroll"><div class="frame'+(S.rendered?' r':'')+'" style="width:'+z[2]+'px;height:'+z[3]+'px">'+inner+'</div></div>'+
+          '<div class="url" style="width:'+z[2]+'px"><code>'+esc(url)+'</code><button class="copy" data-copy="'+esc(url)+'" data-key="'+key+'">'+(S.copied===key?'Copied':'Copy')+'</button></div></div>';
+      });
+      v+='</div></section>';
+    });
+    v+='</div>';
+  } else {
+    v='<div style="display:flex;flex-direction:column;gap:24px"><div class="bar"><div><h1>Send samples</h1><p class="sub">'+esc(p.name)+' send to '+esc(em)+(bl?': not in audience, so no ad is served.':': in audience, Oreo ad served.')+'</p></div><div class="seg" role="group" aria-label="Email language">'+
+      ['EN','FR'].map(function(l){return '<button class="'+(S.lang===l?'on':'')+'" data-lang="'+l+'" aria-pressed="'+(S.lang===l)+'">'+l+'</button>';}).join('')+'</div></div>'+
+      '<div class="previews"><div style="display:flex;flex-direction:column;gap:10px;max-width:100%"><strong style="font-size:13px">Desktop · 600 px email · 520 × 90 ad</strong><div class="desk"><div>'+email(p.id,S.lang,true,name,em)+'</div></div></div>'+
+      '<div style="display:flex;flex-direction:column;gap:10px;max-width:100%"><strong style="font-size:13px">Mobile · 375 px · 300 × 250 ad</strong><div class="phone"><div>'+email(p.id,S.lang,false,name,em)+'</div></div></div></div></div>';
+  }
+  $('view').innerHTML=v;
+}
+
+document.addEventListener('click',function(e){
+  var b=e.target.closest('button');if(!b)return;
+  if(b.dataset.pub){var x=PUBS.filter(function(p){return p.id===b.dataset.pub;})[0];select({pub:x.id,day:x.days[0]});}
+  else if(b.dataset.day)select({day:b.dataset.day});
+  else if(b.dataset.prov)select({prov:b.dataset.prov});
+  else if(b.dataset.tab){S.tab=b.dataset.tab;render();}
+  else if(b.dataset.lang){S.lang=b.dataset.lang;render();}
+  else if(b.dataset.copy){try{navigator.clipboard.writeText(b.dataset.copy);}catch(x){}S.copied=b.dataset.key;render();}
+  else if(b.id==='renderBtn'){S.rendered=true;S.at=new Date().toLocaleTimeString();S.copied='';render();}
+  else if(b.id==='check')doCheck();
+  else if(b.id==='clear'){$('email').value='';S.check=null;$('err').hidden=true;render();}
+});
+$('email').addEventListener('keydown',function(e){if(e.key==='Enter')doCheck();});
+render();doCheck();
+})();
+</script>
+</body>
+</html>
