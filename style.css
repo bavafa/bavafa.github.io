@@ -140,10 +140,10 @@ footer .social { display: none; }
   .tabs { flex-direction: row; overflow-x: auto; border-left: 0; border-bottom: 2px solid var(--lightest-navy); }
   .tabs button { border-left: 0; border-bottom: 2px solid transparent; margin: 0 0 -2px; padding: 0 15px; }
   .tabs button[aria-selected="true"] { border-bottom-color: var(--accent); }
-  .project, .project.flip { display: block; position: relative; border-radius: 6px; overflow: hidden; margin-bottom: 30px; }
-  .project .img { position: absolute; inset: 0; opacity: .2; }
-  .project .img img { height: 100%; object-fit: cover; }
-  .project .info, .project.flip .info { text-align: left; padding: 40px 30px; }
+  .project, .project.flip { display: block; border-radius: 6px; overflow: hidden; margin-bottom: 30px; background: var(--light-navy); }
+  .project .img { border-radius: 0; }
+  .project .img img { mix-blend-mode: normal; filter: none; }
+  .project .info, .project.flip .info { text-align: left; padding: 25px; }
   .desc { background: none; padding: 0; box-shadow: none; }
   .tech { justify-content: flex-start; }
 }
