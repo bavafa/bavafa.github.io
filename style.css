@@ -45,7 +45,7 @@ nav li:not(.cta) a::before { content: "0" counter(n) "."; color: var(--accent); 
 .rail.right a { writing-mode: vertical-rl; font: 12px var(--mono); letter-spacing: .1em; }
 
 main { max-width: 1000px; margin: 0 auto; padding: 0 150px; }
-section { padding: 100px 0; }
+section { padding: 64px 0; }
 
 /* hero */
 #hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0; }
@@ -85,7 +85,7 @@ section { padding: 100px 0; }
 .panel li::before { content: "▹"; position: absolute; left: 0; color: var(--accent); }
 
 /* featured projects */
-.project { display: grid; grid-template-columns: repeat(12, 1fr); align-items: center; margin-bottom: 100px; }
+.project { display: grid; grid-template-columns: repeat(12, 1fr); align-items: center; margin-bottom: 72px; }
 .project .img { grid-column: 1 / 8; grid-row: 1; border-radius: 6px; overflow: hidden; position: relative; background: var(--accent); }
 .project .img img { width: 100%; display: block; mix-blend-mode: multiply; filter: grayscale(100%) contrast(1); transition: all .25s; }
 .project .img:hover img { mix-blend-mode: normal; filter: none; }
@@ -132,7 +132,7 @@ footer .social { display: none; }
   .rail { display: none; }
   footer .social { display: flex; justify-content: flex-start; gap: 24px; margin-bottom: 10px; }
   footer .social svg { width: 20px; height: 20px; }
-  section { padding: 70px 0; }
+  section { padding: 48px 0; }
   .heading::after { width: 100%; }
   .about { grid-template-columns: 1fr; }
   .photo { margin: 30px auto 0; width: 70%; }
